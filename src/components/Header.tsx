@@ -33,12 +33,13 @@ const Header = () => {
           >
             <Icon name="moon" className="h-5 w-5" />
           </button>
-          <Link
-            href="/subscribe"
+          <button
+            type="button"
+            aria-label="Theme"
             className="inline-flex h-9 items-center justify-center rounded-md bg-rose-700 px-4 text-sm font-medium text-neutral-50 shadow-sm transition-colors hover:bg-rose-800"
           >
             Subscribe
-          </Link>
+          </button>
         </div>
       </div>
     </header>
