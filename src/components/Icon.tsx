@@ -1,4 +1,5 @@
-import { icons, type IconName } from "@/lib/svg/icons";
+import { icons } from "@/lib/svg/icons";
+import type { IconName } from "@/types/icon";
 
 type IconProps = {
   className: string;

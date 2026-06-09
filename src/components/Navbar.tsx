@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import Icon, { type IconName } from "@/components/Icon";
+import Icon from "@/components/Icon";
+import type { NavItem } from "@/types/navigation";
 
 const navItems = [
   { href: "/", icon: "home", label: "Home" },
@@ -12,9 +13,9 @@ const navItems = [
   { href: "/business", icon: "business", label: "Business" },
   { href: "/culture", icon: "culture", label: "Culture" },
 ] as const satisfies ReadonlyArray<{
-  href: string;
-  icon: IconName;
-  label: string;
+  href: NavItem["href"];
+  icon: NavItem["icon"];
+  label: NavItem["label"];
 }>;
 
 export default function Navbar() {

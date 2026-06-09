@@ -1,15 +1,4 @@
-import type { ReactElement, SVGProps } from "react";
-
-export type IconName =
-  | "business"
-  | "culture"
-  | "home"
-  | "moon"
-  | "search"
-  | "tech"
-  | "world";
-
-type SvgIconProps = SVGProps<SVGSVGElement>;
+import type { IconMap, SvgIconProps } from "@/types/icon";
 
 const svgProps = {
   "aria-hidden": "true",
@@ -67,4 +56,4 @@ export const icons = {
       <path d="M12 3a15 15 0 0 0 0 18" />
     </svg>
   ),
-} satisfies Record<IconName, (props: SvgIconProps) => ReactElement>;
+} satisfies IconMap;
