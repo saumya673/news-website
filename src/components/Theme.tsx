@@ -1,16 +1,16 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { useTheme } from "next-themes";
 
 import Icon from "@/components/Icon";
-import { useTheme } from "@/providers/ThemeProvider";
 
 function subscribe() {
   return () => {};
 }
 
 export default function Theme() {
-  const { theme, toggleTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const isHydrated = useSyncExternalStore(
     subscribe,
     () => true,
@@ -30,17 +30,18 @@ export default function Theme() {
     );
   }
 
-  const nextTheme = theme === "dark" ? "light" : "dark";
+  const isDarkTheme = resolvedTheme === "dark";
+  const nextTheme = isDarkTheme ? "light" : "dark";
 
   return (
     <button
       type="button"
       aria-label={`Switch to ${nextTheme} theme`}
       title={`Switch to ${nextTheme} theme`}
-      onClick={toggleTheme}
+      onClick={() => setTheme(nextTheme)}
       className="inline-flex h-9 w-9 items-center justify-center rounded-md text-header-muted transition-colors hover:bg-header-hover hover:text-header-strong"
     >
-      <Icon name={theme === "dark" ? "sun" : "moon"} className="h-5 w-5" />
+      <Icon name={isDarkTheme ? "sun" : "moon"} className="h-5 w-5" />
     </button>
   );
 }
