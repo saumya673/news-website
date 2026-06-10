@@ -58,6 +58,19 @@ export const icons = {
       <path d="m16 16 4 4" />
     </svg>
   ),
+  sun: (props: SvgIconProps) => (
+    <svg {...svgProps} {...props}>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2.5v2.25" />
+      <path d="M12 19.25v2.25" />
+      <path d="m5.28 5.28 1.6 1.6" />
+      <path d="m17.12 17.12 1.6 1.6" />
+      <path d="M2.5 12h2.25" />
+      <path d="M19.25 12h2.25" />
+      <path d="m5.28 18.72 1.6-1.6" />
+      <path d="m17.12 6.88 1.6-1.6" />
+    </svg>
+  ),
   tech: (props: SvgIconProps) => (
     <svg {...svgProps} {...props}>
       <path d="M13 2 5 14h6l-1 8 8-12h-6l1-8Z" />

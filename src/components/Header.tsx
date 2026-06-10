@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import Icon from "@/components/Icon";
 import Navbar from "@/components/Navbar";
+import Theme from "@/components/Theme";
 
 const Header = () => {
   return (
@@ -29,13 +30,7 @@ const Header = () => {
             >
               <Icon name="search" className="h-5 w-5" />
             </button>
-            <button
-              type="button"
-              aria-label="Theme"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md text-header-muted transition-colors hover:bg-header-hover hover:text-header-strong"
-            >
-              <Icon name="moon" className="h-5 w-5" />
-            </button>
+            <Theme />
             <button
               type="button"
               aria-label="Subscribe"

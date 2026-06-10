@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -18,6 +20,26 @@
   --footer-button: #ffffff;
   --footer-button-border: #e5e5e5;
   --footer-button-hover: #fafafa;
+}
+
+[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --header-surface: #0a0a0a;
+  --header-border: #262626;
+  --header-strong: #fafafa;
+  --header-muted: #a3a3a3;
+  --header-hover: #171717;
+  --header-accent: #ff4d63;
+  --header-accent-hover: #be123c;
+  --header-inverse: #171717;
+  --footer-surface: #171717;
+  --footer-border: #262626;
+  --footer-strong: #fafafa;
+  --footer-muted: #a3a3a3;
+  --footer-button: #0a0a0a;
+  --footer-button-border: #404040;
+  --footer-button-hover: #262626;
 }
 
 @theme inline {
@@ -42,37 +64,19 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --header-surface: #0a0a0a;
-    --header-border: #262626;
-    --header-strong: #fafafa;
-    --header-muted: #a3a3a3;
-    --header-hover: #171717;
-    --header-accent: #fb7185;
-    --header-accent-hover: #f43f5e;
-    --header-inverse: #171717;
-    --footer-surface: #171717;
-    --footer-border: #262626;
-    --footer-strong: #fafafa;
-    --footer-muted: #a3a3a3;
-    --footer-button: #0a0a0a;
-    --footer-button-border: #404040;
-    --footer-button-hover: #262626;
-  }
+html {
+  color-scheme: light;
+  scrollbar-color: color-mix(in srgb, var(--header-accent) 60%, transparent)
+    transparent;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-html {
-  scrollbar-color: color-mix(in srgb, var(--header-accent) 60%, transparent)
-    transparent;
 }
 
 body::-webkit-scrollbar {

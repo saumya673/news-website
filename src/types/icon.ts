@@ -8,6 +8,7 @@ export type IconName =
   | "instagram"
   | "moon"
   | "search"
+  | "sun"
   | "tech"
   | "world"
   | "x";
