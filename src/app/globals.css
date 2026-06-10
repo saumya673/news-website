@@ -3,11 +3,27 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --header-surface: #ffffff;
+  --header-border: #e5e5e5;
+  --header-strong: #0a0a0a;
+  --header-muted: #525252;
+  --header-hover: #f5f5f5;
+  --header-accent: #be123c;
+  --header-accent-hover: #9f1239;
+  --header-inverse: #fafafa;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-header-surface: var(--header-surface);
+  --color-header-border: var(--header-border);
+  --color-header-strong: var(--header-strong);
+  --color-header-muted: var(--header-muted);
+  --color-header-hover: var(--header-hover);
+  --color-header-accent: var(--header-accent);
+  --color-header-accent-hover: var(--header-accent-hover);
+  --color-header-inverse: var(--header-inverse);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -16,6 +32,14 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --header-surface: #0a0a0a;
+    --header-border: #262626;
+    --header-strong: #fafafa;
+    --header-muted: #a3a3a3;
+    --header-hover: #171717;
+    --header-accent: #fb7185;
+    --header-accent-hover: #f43f5e;
+    --header-inverse: #171717;
   }
 }
 
@@ -23,4 +47,63 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  scrollbar-color: color-mix(in srgb, var(--header-accent) 60%, transparent)
+    transparent;
+}
+
+body::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--header-accent) 55%, transparent);
+  border: 2px solid transparent;
+  border-radius: 9999px;
+  background-clip: padding-box;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--header-accent-hover) 70%, transparent);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+@layer components {
+  .desktop-brand-text {
+    @apply lg:text-2xl lg:font-bold lg:tracking-[-0.03em];
+  }
+
+  .desktop-nav-text {
+    @apply lg:text-sm lg:leading-5;
+  }
+
+  .mobile-nav-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 1rem,
+      black calc(100% - 1rem),
+      transparent
+    );
+  }
+
+  .mobile-nav-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (min-width: 64rem) {
+    .mobile-nav-scroll {
+      mask-image: none;
+    }
+  }
 }
