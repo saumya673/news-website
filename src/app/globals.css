@@ -11,6 +11,13 @@
   --header-accent: #be123c;
   --header-accent-hover: #9f1239;
   --header-inverse: #fafafa;
+  --footer-surface: #f5f5f5;
+  --footer-border: #e5e5e5;
+  --footer-strong: #0a0a0a;
+  --footer-muted: #737373;
+  --footer-button: #ffffff;
+  --footer-button-border: #e5e5e5;
+  --footer-button-hover: #fafafa;
 }
 
 @theme inline {
@@ -24,6 +31,13 @@
   --color-header-accent: var(--header-accent);
   --color-header-accent-hover: var(--header-accent-hover);
   --color-header-inverse: var(--header-inverse);
+  --color-footer-surface: var(--footer-surface);
+  --color-footer-border: var(--footer-border);
+  --color-footer-strong: var(--footer-strong);
+  --color-footer-muted: var(--footer-muted);
+  --color-footer-button: var(--footer-button);
+  --color-footer-button-border: var(--footer-button-border);
+  --color-footer-button-hover: var(--footer-button-hover);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -40,6 +54,13 @@
     --header-accent: #fb7185;
     --header-accent-hover: #f43f5e;
     --header-inverse: #171717;
+    --footer-surface: #171717;
+    --footer-border: #262626;
+    --footer-strong: #fafafa;
+    --footer-muted: #a3a3a3;
+    --footer-button: #0a0a0a;
+    --footer-button-border: #404040;
+    --footer-button-hover: #262626;
   }
 }
 

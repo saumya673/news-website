@@ -25,11 +25,26 @@ export const icons = {
       <circle cx="7.5" cy="14.5" r="1" fill="currentColor" stroke="none" />
     </svg>
   ),
+  facebook: (props: SvgIconProps) => (
+    <svg {...svgProps} {...props}>
+      <path d="M14.5 8H13a2 2 0 0 0-2 2v3" />
+      <path d="M10 13h4" />
+      <path d="M12 21v-8" />
+      <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75v14.5A1.75 1.75 0 0 1 16.25 21h-8.5A1.75 1.75 0 0 1 6 19.25Z" />
+    </svg>
+  ),
   home: (props: SvgIconProps) => (
     <svg {...svgProps} {...props}>
       <path d="M4 10.5 12 4l8 6.5" />
       <path d="M6.5 9.5V20h11V9.5" />
       <path d="M10 20v-5h4v5" />
+    </svg>
+  ),
+  instagram: (props: SvgIconProps) => (
+    <svg {...svgProps} {...props}>
+      <rect x="4.5" y="4.5" width="15" height="15" rx="4" />
+      <circle cx="12" cy="12" r="3.25" />
+      <circle cx="16.25" cy="7.75" r="0.75" fill="currentColor" stroke="none" />
     </svg>
   ),
   moon: (props: SvgIconProps) => (
@@ -54,6 +69,12 @@ export const icons = {
       <path d="M3 12h18" />
       <path d="M12 3a15 15 0 0 1 0 18" />
       <path d="M12 3a15 15 0 0 0 0 18" />
+    </svg>
+  ),
+  x: (props: SvgIconProps) => (
+    <svg {...svgProps} {...props}>
+      <path d="m6 6 12 12" />
+      <path d="M18 6 6 18" />
     </svg>
   ),
 } satisfies IconMap;

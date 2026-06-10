@@ -3,11 +3,14 @@ import type { ReactElement, SVGProps } from "react";
 export type IconName =
   | "business"
   | "culture"
+  | "facebook"
   | "home"
+  | "instagram"
   | "moon"
   | "search"
   | "tech"
-  | "world";
+  | "world"
+  | "x";
 
 export type SvgIconProps = SVGProps<SVGSVGElement>;
 
