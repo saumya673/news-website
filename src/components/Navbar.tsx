@@ -40,7 +40,7 @@ export default function Navbar() {
             className={`desktop-nav-text inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-sm leading-5 transition-colors ${
               isActive
                 ? "font-semibold text-header-accent"
-                : "font-medium text-header-muted hover:bg-neutral-50 hover:text-header-strong"
+                : "font-medium text-header-muted hover:bg-header-hover hover:text-header-strong"
             }`}
           >
             <Icon name={item.icon} className="h-4 w-4" />

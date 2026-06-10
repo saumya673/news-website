@@ -25,20 +25,20 @@ const Header = () => {
             <button
               type="button"
               aria-label="Search"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md text-header-muted transition-colors hover:bg-neutral-50 hover:text-header-strong"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md text-header-muted transition-colors hover:bg-header-hover hover:text-header-strong"
             >
               <Icon name="search" className="h-5 w-5" />
             </button>
             <button
               type="button"
               aria-label="Theme"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md text-header-muted transition-colors hover:bg-neutral-50 hover:text-header-strong"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md text-header-muted transition-colors hover:bg-header-hover hover:text-header-strong"
             >
               <Icon name="moon" className="h-5 w-5" />
             </button>
             <button
               type="button"
-              aria-label="Theme"
+              aria-label="Subscribe"
               className="inline-flex h-9 items-center justify-center rounded-md bg-header-accent px-4 text-sm font-medium text-header-inverse shadow-sm transition-colors hover:bg-header-accent-hover"
             >
               Subscribe

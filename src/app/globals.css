@@ -7,6 +7,7 @@
   --header-border: #e5e5e5;
   --header-strong: #0a0a0a;
   --header-muted: #525252;
+  --header-hover: #f5f5f5;
   --header-accent: #be123c;
   --header-accent-hover: #9f1239;
   --header-inverse: #fafafa;
@@ -19,6 +20,7 @@
   --color-header-border: var(--header-border);
   --color-header-strong: var(--header-strong);
   --color-header-muted: var(--header-muted);
+  --color-header-hover: var(--header-hover);
   --color-header-accent: var(--header-accent);
   --color-header-accent-hover: var(--header-accent-hover);
   --color-header-inverse: var(--header-inverse);
@@ -34,6 +36,7 @@
     --header-border: #262626;
     --header-strong: #fafafa;
     --header-muted: #a3a3a3;
+    --header-hover: #171717;
     --header-accent: #fb7185;
     --header-accent-hover: #f43f5e;
     --header-inverse: #171717;
