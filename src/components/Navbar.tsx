@@ -22,7 +22,10 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
+    <nav
+      aria-label="Primary"
+      className="flex w-full items-center justify-start gap-1 overflow-x-auto md:justify-center lg:w-auto lg:justify-start"
+    >
       {navItems.map((item) => {
         const isActive =
           item.href === "/"
@@ -34,10 +37,10 @@ export default function Navbar() {
             key={item.href}
             href={item.href}
             aria-current={isActive ? "page" : undefined}
-            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm leading-5 transition-colors ${
+            className={`desktop-nav-text inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-sm leading-5 transition-colors ${
               isActive
-                ? "font-semibold text-rose-700"
-                : "font-medium text-neutral-500 hover:bg-neutral-50 hover:text-neutral-900"
+                ? "font-semibold text-header-accent"
+                : "font-medium text-header-muted hover:bg-neutral-50 hover:text-header-strong"
             }`}
           >
             <Icon name={item.icon} className="h-4 w-4" />
