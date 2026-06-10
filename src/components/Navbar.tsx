@@ -24,7 +24,7 @@ export default function Navbar() {
   return (
     <nav
       aria-label="Primary"
-      className="flex w-full items-center justify-start gap-1 overflow-x-auto md:justify-center lg:w-auto lg:justify-start"
+      className="mobile-nav-scroll flex w-full items-center justify-start gap-1 overflow-x-auto md:justify-center lg:w-auto lg:justify-start"
     >
       {navItems.map((item) => {
         const isActive =
