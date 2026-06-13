@@ -1,13 +1,62 @@
+"use client";
+
+import { useRef, type PointerEvent } from "react";
+
 import { icons } from "@/lib/svg/icons";
 
 const latestHeadlines = [
   "Senate passes infrastructure bill in late-night vote",
   "Tech giant unveils next-gen wearable at keynote",
   "Wildfire containment reaches 80% in coastal region",
+  "Developers are mcksvkjdfvn",
 ] as const;
 
 const LatestNews = () => {
   const WorldIcon = icons.world;
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const dragStateRef = useRef<{
+    isDragging: boolean;
+    startX: number;
+    startScrollLeft: number;
+  } | null>(null);
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    const container = scrollRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    dragStateRef.current = {
+      isDragging: true,
+      startX: event.clientX,
+      startScrollLeft: container.scrollLeft,
+    };
+
+    container.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const container = scrollRef.current;
+    const dragState = dragStateRef.current;
+
+    if (!container || !dragState?.isDragging) {
+      return;
+    }
+
+    container.scrollLeft =
+      dragState.startScrollLeft - (event.clientX - dragState.startX);
+  };
+
+  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    const container = scrollRef.current;
+
+    if (container?.hasPointerCapture(event.pointerId)) {
+      container.releasePointerCapture(event.pointerId);
+    }
+
+    dragStateRef.current = null;
+  };
 
   return (
     <section className="bg-hero-surface">
@@ -19,21 +68,25 @@ const LatestNews = () => {
           </div>
 
           <div className="min-w-0 flex-1 overflow-hidden">
-            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-2">
+            <div
+              ref={scrollRef}
+              className="mobile-nav-scroll flex w-full touch-pan-x items-center gap-3 overflow-x-auto whitespace-nowrap md:cursor-grab md:active:cursor-grabbing"
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+            >
               {latestHeadlines.map((headline, index) => (
                 <div
                   key={headline}
-                  className="flex min-w-0 items-center gap-3 text-sm leading-5 font-medium text-header-strong"
+                  className="flex shrink-0 items-center gap-3 text-sm leading-5 font-medium text-header-strong"
                 >
                   {index > 0 ? (
-                    <span
-                      aria-hidden="true"
-                      className="hidden text-header-accent sm:inline"
-                    >
+                    <span aria-hidden="true" className="text-header-accent">
                       &bull;
                     </span>
                   ) : null}
-                  <span className="truncate">{headline}</span>
+                  <span>{headline}</span>
                 </div>
               ))}
             </div>
