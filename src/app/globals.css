@@ -5,6 +5,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --hero-surface: #f7f7f8;
+  --hero-strong: #171717;
+  --hero-muted: #525252;
+  --hero-image-overlay-start: rgba(247, 247, 248, 0.94);
+  --hero-image-overlay-end: rgba(247, 247, 248, 0);
   --header-surface: #ffffff;
   --header-border: #e5e5e5;
   --header-strong: #0a0a0a;
@@ -25,6 +30,11 @@
 [data-theme="dark"] {
   --background: #0a0a0a;
   --foreground: #ededed;
+  --hero-surface: #17181c;
+  --hero-strong: #f2f3f5;
+  --hero-muted: #9aa0a8;
+  --hero-image-overlay-start: rgba(23, 24, 28, 1);
+  --hero-image-overlay-end: rgba(23, 24, 28, 0);
   --header-surface: #0a0a0a;
   --header-border: #262626;
   --header-strong: #fafafa;
@@ -45,6 +55,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-hero-surface: var(--hero-surface);
+  --color-hero-strong: var(--hero-strong);
+  --color-hero-muted: var(--hero-muted);
   --color-header-surface: var(--header-surface);
   --color-header-border: var(--header-border);
   --color-header-strong: var(--header-strong);
@@ -123,6 +136,16 @@ body::-webkit-scrollbar-thumb:hover {
   }
 
   .mobile-nav-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .editor-picks-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .editor-picks-scroll::-webkit-scrollbar {
     display: none;
   }
 

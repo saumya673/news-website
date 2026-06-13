@@ -11,6 +11,16 @@ const svgProps = {
 } satisfies SvgIconProps;
 
 export const icons = {
+  arrowRight: (props: SvgIconProps) => (
+    <svg
+      {...svgProps}
+      strokeWidth={1.333}
+      viewBox="0 0 16 16"
+      {...props}
+    >
+      <path d="M3.333 8h9.334M8.667 3l4 5-4 5" />
+    </svg>
+  ),
   business: (props: SvgIconProps) => (
     <svg {...svgProps} {...props}>
       <path d="M4 16l5-5 4 3 7-8" />
