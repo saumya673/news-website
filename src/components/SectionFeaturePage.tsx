@@ -41,7 +41,6 @@ export default function SectionFeaturePage({
           <div key={className} className={className} />
         ))}
         gridClassName="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,28rem)] lg:gap-12"
-        kicker="Featured Story"
         media={
           <Link href={featuredArticle.href} className="group block">
             <div className="transition-transform duration-300 group-hover:scale-[1.01]">
@@ -61,11 +60,16 @@ export default function SectionFeaturePage({
               aria-label="Breadcrumb"
               className="flex items-center gap-2 text-sm leading-5 text-footer-muted"
             >
-              <Link href="/" className="transition-colors hover:text-foreground">
+              <Link
+                href="/"
+                className="transition-colors hover:text-foreground"
+              >
                 Home
               </Link>
               <span>&gt;</span>
-              <span className="font-medium text-foreground">{config.label}</span>
+              <span className="font-medium text-foreground">
+                {config.label}
+              </span>
             </nav>
 
             <div className="mt-8 flex items-center gap-3">
@@ -82,12 +86,17 @@ export default function SectionFeaturePage({
             {sectionArticles.length > 0 ? (
               <div className="mt-8 grid gap-6 md:grid-cols-2">
                 {sectionArticles.map((article) => (
-                  <ArticleCard key={article.id} article={article} variant="section" />
+                  <ArticleCard
+                    key={article.id}
+                    article={article}
+                    variant="section"
+                  />
                 ))}
               </div>
             ) : (
               <div className="mt-8 rounded-xl border border-header-border bg-background px-6 py-8 text-sm leading-6 text-footer-muted shadow-sm">
-                No additional stories are available in {config.label.toLowerCase()} right now.
+                No additional stories are available in{" "}
+                {config.label.toLowerCase()} right now.
               </div>
             )}
           </div>
@@ -104,7 +113,11 @@ export default function SectionFeaturePage({
               <div className="mt-4 overflow-hidden rounded-xl border border-header-border bg-background shadow-sm">
                 {sidebarArticles.length > 0 ? (
                   sidebarArticles.map((article) => (
-                    <ArticleCard key={article.id} article={article} variant="compact" />
+                    <ArticleCard
+                      key={article.id}
+                      article={article}
+                      variant="compact"
+                    />
                   ))
                 ) : (
                   <div className="px-5 py-6 text-sm leading-6 text-footer-muted">
@@ -123,7 +136,10 @@ export default function SectionFeaturePage({
               </p>
 
               <form className="mt-5 space-y-3">
-                <label htmlFor={`${config.slug}-newsletter-email`} className="sr-only">
+                <label
+                  htmlFor={`${config.slug}-newsletter-email`}
+                  className="sr-only"
+                >
                   Email address
                 </label>
                 <input
