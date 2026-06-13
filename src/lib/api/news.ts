@@ -12,6 +12,7 @@ const NEWS_API_DATA_PATH = process.env.NEWS_API_DATA_PATH?.trim() || null;
 
 export const TOP_STORIES_REVALIDATE_SECONDS = 60;
 export const ARTICLE_ROUTE_PREFIX = "/articles";
+export type NewsSection = Article["section"];
 
 type CuratedCollection =
   | "editorPicks"
@@ -235,4 +236,31 @@ export async function getArticlesByIds(
     const article = articlesById.get(articleId);
     return article ? [withArticleHref(article)] : [];
   });
+}
+
+export async function getArticlesBySection(
+  section: NewsSection,
+): Promise<LinkedArticle[]> {
+  const next = { revalidate: TOP_STORIES_REVALIDATE_SECONDS };
+
+  if (NEWS_API_DATA_PATH) {
+    const newsApiDocument = await getNewsApiDocument({ next });
+
+    return newsApiDocument.articles
+      .filter((article) => article.section === section)
+      .sort((left, right) => {
+        return (
+          new Date(right.publishedAt).getTime() -
+          new Date(left.publishedAt).getTime()
+        );
+      })
+      .map(withArticleHref);
+  }
+
+  const articles = await fetchNewsJson<Article[]>(
+    `/articles?section=${encodeURIComponent(section)}&_sort=publishedAt&_order=desc`,
+    { next },
+  );
+
+  return articles.map(withArticleHref);
 }
