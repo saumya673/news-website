@@ -18,13 +18,18 @@ export interface Article {
   relatedIds: number[];
 }
 
+export interface LinkedArticle extends Article {
+  href: string;
+}
+
+export interface RankedArticle extends LinkedArticle {
+  rank: number;
+}
+
 export interface CuratedArticleReference {
   id: string;
   articleId: number;
   rank: number;
 }
 
-export interface TopStory extends Article {
-  href: string;
-  rank: number;
-}
+export type TopStory = RankedArticle;

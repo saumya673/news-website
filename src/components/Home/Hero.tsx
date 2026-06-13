@@ -1,24 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { getHeroStory } from "@/lib/api/news";
 import { icons } from "@/lib/svg/icons";
 
-const article = {
-  category: "World",
-  title: "Global Leaders Convene as Climate Deadline Looms",
-  description:
-    "Delegates from over 190 nations gathered this week to negotiate sweeping emissions targets, as scientists warn the window to avert irreversible damage is rapidly closing.",
-  author: "Eleanor Hayes",
-  publishedAt: "June 12, 2025",
-  href: "/world",
-  image: {
-    src: "https://images.unsplash.com/photo-1541872705-1f73c6400ec9?auto=format&fit=crop&w=1200&q=80",
-    alt: "World leaders seated in a summit discussion under bright conference lights.",
-  },
-};
+function formatPublishedAt(value: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "long",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
 
-export default function Hero() {
+export default async function Hero() {
   const ArrowRightIcon = icons.arrowRight;
+  const article = await getHeroStory();
+
+  if (!article) {
+    return null;
+  }
 
   return (
     <section className="bg-hero-surface">
@@ -31,14 +30,16 @@ export default function Hero() {
               </span>
 
               <div className="w-full">
-                <h1 className="max-w-141 font-serif text-[2.25rem] leading-[1.08] font-bold tracking-[-0.03em] text-hero-strong sm:text-[3rem] sm:leading-13.25">
-                  {article.title}
-                </h1>
+                <Link href={article.href} className="group block">
+                  <h1 className="max-w-141 font-serif text-[2.25rem] leading-[1.08] font-bold tracking-[-0.03em] text-hero-strong transition-colors group-hover:text-header-accent sm:text-[3rem] sm:leading-13.25">
+                    {article.title}
+                  </h1>
+                </Link>
               </div>
 
               <div className="w-full">
                 <p className="max-w-141 text-base leading-7 text-hero-muted sm:text-[17px] sm:leading-6.75">
-                  {article.description}
+                  {article.excerpt}
                 </p>
               </div>
 
@@ -52,7 +53,7 @@ export default function Hero() {
                     {article.author}
                   </p>
                   <p className="text-sm leading-5 text-hero-muted">
-                    {article.publishedAt}
+                    {formatPublishedAt(article.publishedAt)}
                   </p>
                 </div>
               </div>
@@ -66,7 +67,10 @@ export default function Hero() {
               </Link>
             </div>
 
-            <div className="relative w-full overflow-hidden rounded-lg lg:h-105.75 lg:w-full">
+            <Link
+              href={article.href}
+              className="group relative block w-full overflow-hidden rounded-lg lg:h-105.75 lg:w-full"
+            >
               <div className="relative aspect-564/423 w-full lg:h-full">
                 <Image
                   src={article.image.src}
@@ -74,11 +78,11 @@ export default function Hero() {
                   fill
                   preload
                   sizes="(min-width: 1024px) 760px, 100vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                 />
                 <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(90deg,var(--hero-image-overlay-start)_0%,var(--hero-image-overlay-end)_55%)] dark:block" />
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
