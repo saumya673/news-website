@@ -8,9 +8,20 @@ import type {
 
 const NEWS_API_BASE_URL =
   process.env.NEWS_API_BASE_URL ?? "http://127.0.0.1:3001";
+const NEWS_API_DATA_PATH = process.env.NEWS_API_DATA_PATH?.trim() || null;
 
 export const TOP_STORIES_REVALIDATE_SECONDS = 60;
 export const ARTICLE_ROUTE_PREFIX = "/articles";
+
+type CuratedCollection =
+  | "editorPicks"
+  | "hero"
+  | "latestHeadlines"
+  | "topStories";
+
+type NewsApiDocument = {
+  articles: Article[];
+} & Record<CuratedCollection, CuratedArticleReference[]>;
 
 type NewsRequestInit = RequestInit & {
   next?: {
@@ -41,8 +52,12 @@ async function fetchNewsResponse(
       },
     });
   } catch (error) {
+    const setupHint = NEWS_API_DATA_PATH
+      ? `Check NEWS_API_BASE_URL (${NEWS_API_BASE_URL}) and NEWS_API_DATA_PATH (${NEWS_API_DATA_PATH}).`
+      : 'Start the local mock API with "pnpm mock:api", or configure NEWS_API_DATA_PATH for a hosted single-document mock.';
+
     throw new Error(
-      `Unable to reach the mock news API at ${NEWS_API_BASE_URL}. Start it with "pnpm mock:api".`,
+      `Unable to reach the mock news API at ${NEWS_API_BASE_URL}. ${setupHint}`,
       { cause: error },
     );
   }
@@ -70,10 +85,57 @@ function withArticleHref(article: Article): LinkedArticle {
   };
 }
 
+async function getNewsApiDocument(
+  init?: NewsRequestInit,
+): Promise<NewsApiDocument> {
+  if (!NEWS_API_DATA_PATH) {
+    throw new Error(
+      "NEWS_API_DATA_PATH must be configured to use the single-document news API mode.",
+    );
+  }
+
+  return fetchNewsJson<NewsApiDocument>(NEWS_API_DATA_PATH, init);
+}
+
+function mapCuratedArticles(
+  curatedStories: CuratedArticleReference[],
+  articles: Article[],
+): RankedArticle[] {
+  const sortedCuratedStories = [...curatedStories].sort((left, right) => {
+    return left.rank - right.rank;
+  });
+  const articlesById = new Map(
+    articles.map((article) => [article.id, article] as const),
+  );
+
+  return sortedCuratedStories.map((story) => {
+    const article = articlesById.get(story.articleId);
+
+    if (!article) {
+      throw new Error(
+        `Top story reference ${story.id} points to missing article ${story.articleId}.`,
+      );
+    }
+
+    return {
+      ...withArticleHref(article),
+      rank: story.rank,
+    };
+  });
+}
+
 async function getCuratedArticles(
-  collection: "editorPicks" | "hero" | "latestHeadlines" | "topStories",
+  collection: CuratedCollection,
 ): Promise<RankedArticle[]> {
   const next = { revalidate: TOP_STORIES_REVALIDATE_SECONDS };
+
+  if (NEWS_API_DATA_PATH) {
+    const newsApiDocument = await getNewsApiDocument({ next });
+    return mapCuratedArticles(
+      newsApiDocument[collection],
+      newsApiDocument.articles,
+    );
+  }
 
   const curatedStories = await fetchNewsJson<CuratedArticleReference[]>(
     `/${collection}?_sort=rank&_order=asc`,
@@ -90,25 +152,7 @@ async function getCuratedArticles(
     )}`,
     { next },
   );
-
-  const articlesById = new Map(
-    articles.map((article) => [article.id, article] as const),
-  );
-
-  return curatedStories.map((story) => {
-    const article = articlesById.get(story.articleId);
-
-    if (!article) {
-      throw new Error(
-        `Top story reference ${story.id} points to missing article ${story.articleId}.`,
-      );
-    }
-
-    return {
-      ...withArticleHref(article),
-      rank: story.rank,
-    };
-  });
+  return mapCuratedArticles(curatedStories, articles);
 }
 
 export async function getHeroStory(): Promise<RankedArticle | null> {
@@ -132,6 +176,16 @@ export async function getArticleById(
   articleId: number,
 ): Promise<LinkedArticle | null> {
   const next = { revalidate: TOP_STORIES_REVALIDATE_SECONDS };
+
+  if (NEWS_API_DATA_PATH) {
+    const newsApiDocument = await getNewsApiDocument({ next });
+    const article = newsApiDocument.articles.find(
+      (candidate) => candidate.id === articleId,
+    );
+
+    return article ? withArticleHref(article) : null;
+  }
+
   const response = await fetchNewsResponse(`/articles/${articleId}`, { next });
 
   if (response.status === 404) {
@@ -156,6 +210,19 @@ export async function getArticlesByIds(
   }
 
   const next = { revalidate: TOP_STORIES_REVALIDATE_SECONDS };
+
+  if (NEWS_API_DATA_PATH) {
+    const newsApiDocument = await getNewsApiDocument({ next });
+    const articlesById = new Map(
+      newsApiDocument.articles.map((article) => [article.id, article] as const),
+    );
+
+    return articleIds.flatMap((articleId) => {
+      const article = articlesById.get(articleId);
+      return article ? [withArticleHref(article)] : [];
+    });
+  }
+
   const articles = await fetchNewsJson<Article[]>(
     `/articles?${buildArticleIdQuery(articleIds)}`,
     { next },

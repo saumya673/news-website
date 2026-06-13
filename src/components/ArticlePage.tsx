@@ -41,7 +41,10 @@ export default function ArticlePage({
               aria-label="Breadcrumb"
               className="flex flex-wrap items-center gap-2 text-sm leading-5 text-header-muted"
             >
-              <Link href="/" className="transition-colors hover:text-foreground">
+              <Link
+                href="/"
+                className="transition-colors hover:text-foreground"
+              >
                 Home
               </Link>
               <span aria-hidden="true">&gt;</span>
@@ -52,12 +55,14 @@ export default function ArticlePage({
                 {formatSectionName(article.section)}
               </Link>
               <span aria-hidden="true">&gt;</span>
-              <span className="font-medium text-foreground">{article.title}</span>
+              <span className="font-medium text-foreground">
+                {article.title}
+              </span>
             </nav>
 
             <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,32rem)] lg:items-start lg:gap-10">
               <div className="max-w-3xl">
-                <span className="inline-flex rounded-full bg-header-accent px-3 py-1 text-xs font-semibold tracking-[0.025em] text-header-inverse uppercase">
+                <span className="inline-flex rounded-full bg-header-accent px-3 py-1 text-xs font-semibold tracking-wide text-header-inverse uppercase">
                   {article.category}
                 </span>
 
@@ -78,13 +83,14 @@ export default function ArticlePage({
                       {article.author}
                     </p>
                     <p className="text-sm leading-5 text-header-muted">
-                      {formatPublishedAt(article.publishedAt)} | {article.readTime}
+                      {formatPublishedAt(article.publishedAt)} |{" "}
+                      {article.readTime}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--foreground)_10%,transparent)] bg-background shadow-[0_18px_50px_color-mix(in_srgb,var(--foreground)_14%,transparent)]">
+              <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--foreground)_10%,transparent)] bg-background shadow-[0_18px_50px_color-mix(in_srgb,var(--foreground)_14%,transparent)]">
                 <Image
                   src={article.image.src}
                   alt={article.image.alt}
@@ -123,7 +129,7 @@ export default function ArticlePage({
                       href={relatedArticle.href}
                       className="group block overflow-hidden rounded-xl border border-[color-mix(in_srgb,var(--foreground)_8%,transparent)] bg-background shadow-[0_1px_3px_color-mix(in_srgb,var(--foreground)_10%,transparent),0_1px_2px_-1px_color-mix(in_srgb,var(--foreground)_10%,transparent)] transition-transform hover:-translate-y-0.5"
                     >
-                      <div className="relative aspect-[16/10] w-full">
+                      <div className="relative aspect-16/10 w-full">
                         <Image
                           src={relatedArticle.image.src}
                           alt={relatedArticle.image.alt}
