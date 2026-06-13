@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import { icons } from "@/lib/svg/icons";
+import StoryHero from "@/components/StoryHero";
 import type { LinkedArticle } from "@/types/news";
 
 export type SectionPageConfig = {
@@ -20,15 +20,6 @@ function formatPublishedAt(value: string) {
     dateStyle: "long",
     timeZone: "UTC",
   }).format(new Date(value));
-}
-
-function getInitials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
 }
 
 function StoryCard({ article }: { article: LinkedArticle }) {
@@ -106,75 +97,33 @@ export default function SectionFeaturePage({
   relatedArticles: LinkedArticle[];
   sectionArticles: LinkedArticle[];
 }) {
-  const ArrowRightIcon = icons.arrowRight;
-  const initials = getInitials(featuredArticle.author);
   const sidebarArticles =
     relatedArticles.length > 0 ? relatedArticles : sectionArticles;
 
   return (
     <div className="bg-background">
-      <section className="relative overflow-hidden bg-[#0b0d1a] text-white">
-        {config.heroGlowClasses.map((className) => (
+      <StoryHero
+        article={featuredArticle}
+        backgroundClassName="relative overflow-hidden bg-[#0b0d1a] text-white"
+        badgeLabel={config.label}
+        contentClassName="max-w-3xl"
+        ctaClassName={config.accentLinkClassName}
+        decorations={config.heroGlowClasses.map((className) => (
           <div key={className} className={className} />
         ))}
-
-        <div className="relative mx-auto w-full max-w-360 px-4 py-10 sm:px-8 sm:py-12 md:px-12 lg:px-30 lg:py-12">
-          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,28rem)] lg:gap-12">
-            <div className="max-w-3xl">
-              <span className="inline-flex rounded-full bg-header-accent px-3 py-1 text-xs font-semibold tracking-[0.025em] text-header-inverse uppercase">
-                {config.label}
-              </span>
-
-              <p className="mt-5 text-sm leading-6 font-medium tracking-[0.24em] text-white/60 uppercase">
-                Featured Story
-              </p>
-
-              <Link href={featuredArticle.href} className="group mt-3 block">
-                <h1 className="font-serif text-4xl leading-tight font-bold tracking-[-0.03em] text-white transition-colors group-hover:text-header-accent sm:text-5xl sm:leading-[1.15]">
-                  {featuredArticle.title}
-                </h1>
-              </Link>
-
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-white/80 sm:text-[1.375rem] sm:leading-[1.7]">
-                {featuredArticle.excerpt}
-              </p>
-
-              <p className="mt-5 max-w-2xl text-sm leading-6 text-white/65 sm:text-base">
-                {config.description}
-              </p>
-
-              <div className="mt-8 flex items-center gap-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-sm font-semibold text-white">
-                  {initials}
-                </div>
-                <div>
-                  <p className="text-sm leading-5 font-semibold text-white">
-                    {featuredArticle.author}
-                  </p>
-                  <p className="text-sm leading-5 text-white/70">
-                    {formatPublishedAt(featuredArticle.publishedAt)} |{" "}
-                    {featuredArticle.readTime}
-                  </p>
-                </div>
-              </div>
-
-              <Link
-                href={featuredArticle.href}
-                className={`mt-7 inline-flex items-center gap-1.5 text-sm leading-5 font-semibold transition-colors ${config.accentLinkClassName}`}
-              >
-                <span>Read More</span>
-                <ArrowRightIcon className="h-4 w-4" />
-              </Link>
+        gridClassName="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,28rem)] lg:gap-12"
+        kicker="Featured Story"
+        media={
+          <Link href={featuredArticle.href} className="group block">
+            <div className="transition-transform duration-300 group-hover:scale-[1.01]">
+              {config.heroArtwork}
             </div>
-
-            <Link href={featuredArticle.href} className="group block">
-              <div className="transition-transform duration-300 group-hover:scale-[1.01]">
-                {config.heroArtwork}
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
+          </Link>
+        }
+        outerClassName="relative mx-auto w-full max-w-360 px-4 py-10 sm:px-8 sm:py-12 md:px-12 lg:px-30 lg:py-12"
+        supportingText={config.description}
+        theme="feature"
+      />
 
       <section className="mx-auto w-full max-w-360 px-4 py-10 sm:px-8 sm:py-12 md:px-12 lg:px-30 lg:py-14">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-12">
