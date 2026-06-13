@@ -1,36 +1,211 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# News Website
 
-## Getting Started
+A responsive news website built with Next.js 16, React 19, TypeScript, Tailwind CSS v4, and a mock news API. The app renders a homepage, section landing pages, and dynamic article pages using shared editorial data.
 
-First, run the development server:
+## What This App Is
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+This project is a multi-page news website for browsing editorial content across sections such as `World`, `Tech`, `Business`, and `Culture`.
+
+Key user-facing features:
+
+- Homepage with hero story, top stories, latest headlines, and editor's picks
+- Section pages for curated topic coverage
+- Dynamic article detail pages at `/articles/[articleId]`
+- Responsive layout for mobile, tablet, and desktop
+- Light and dark theme support
+
+## Tech Stack
+
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- `next-themes` for theme switching
+- `json-server` for local mock API data
+- Postman Mock Server support for hosted mock data
+
+## Project Structure
+
+```text
+src/
+  app/                 App Router routes and layout
+  components/          Reusable UI components
+  lib/api/             API access layer for news data
+  lib/                 shared config, SVGs, and utilities
+  providers/           App providers
+  types/               Shared TypeScript types
+mocks/
+  news-db.json         Mock news content
+docs/
+  screenshots/         Lighthouse screenshots to attach in README
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How To Run
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Clone the repository
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone https://github.com/saumya673/news-website.git
+cd news-website
+```
 
-## Learn More
+### 2. Install dependencies
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Create the environment file
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+macOS/Linux:
 
-## Deploy on Vercel
+```bash
+cp .env.local.example .env.local
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Windows PowerShell:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```powershell
+Copy-Item .env.local.example .env.local
+```
+
+Windows Command Prompt:
+
+```bat
+copy .env.local.example .env.local
+```
+
+Then configure one of the mock API modes below.
+
+### 4. Start the app
+
+```bash
+pnpm dev
+```
+
+Open `http://localhost:3000`.
+
+## Environment Variables
+
+The app reads server-side env vars from the project root `.env.local`.
+
+```env
+NEWS_API_BASE_URL=
+NEWS_API_DATA_PATH=
+```
+
+### Hosted mock API mode: Postman Mock Server or your own API
+
+Use this when your news data is served from a hosted endpoint as one JSON document. You can either:
+
+- create a Postman Mock Server
+- create your own API and point the app to it
+
+As long as the endpoint returns the same data shape, the app will work with either option.
+
+Example:
+
+```env
+NEWS_API_BASE_URL=https://<your-mock-id>.mock.pstmn.io
+NEWS_API_DATA_PATH=/news
+```
+
+How it works:
+
+- `NEWS_API_BASE_URL` points to your hosted mock server or custom API
+- `NEWS_API_DATA_PATH=/news` tells the app to fetch one aggregated document
+- That document contains `articles`, `hero`, `topStories`, `latestHeadlines`, and `editorPicks`
+
+### Local mock API mode: json-server
+
+Use this when you want to serve data locally from `mocks/news-db.json`.
+
+`.env.local`
+
+```env
+NEWS_API_BASE_URL=http://127.0.0.1:3001
+# Leave NEWS_API_DATA_PATH empty or remove it for local mode
+```
+
+Start the local mock API in a separate terminal:
+
+```bash
+pnpm mock:api
+```
+
+Then run the app:
+
+```bash
+pnpm dev
+```
+
+## Architecture Decisions
+
+### 1. App Router with server-first data fetching
+
+The app uses the Next.js App Router and fetches content on the server through `src/lib/api/news.ts`. This keeps API access centralized and avoids duplicating fetch logic across pages and components.
+
+### 2. Single API abstraction for two mock modes
+
+The API layer supports both:
+
+- local collection-based `json-server` endpoints such as `/articles`
+- hosted Postman single-document mode via `NEWS_API_DATA_PATH=/news`
+
+This makes it easy to switch between local development and an externally hosted mock server without changing page components.
+
+### 3. Reusable editorial components
+
+Homepage rails, cards, story hero blocks, and section layouts are split into reusable components so the content model stays consistent across routes.
+
+### 4. Config-driven section pages
+
+Section pages share a common layout and use central configuration from `src/lib/section-pages.tsx` for metadata, copy, and visual treatment. This avoids duplicating page structure for each section.
+
+### 5. Theme-aware styling
+
+The UI uses Tailwind utilities with shared theme tokens and `next-themes` for light/dark support instead of hard-coded one-theme styling.
+
+## Available Routes
+
+- `/` - homepage
+- `/articles/1` - example article detail page
+- `/world`
+- `/tech`
+- `/business`
+- `/culture`
+- `/about`
+- `/contact`
+- `/subscribe`
+- `/press`
+- `/careers`
+
+## Lighthouse Report
+
+Lighthouse was run against the deployed build on Vercel.
+
+Pages measured:
+
+- Home page: `/`
+- Article page: `/articles/1`
+
+### Scores
+
+| Page                    | Performance | Accessibility | Best Practices | SEO |
+| ----------------------- | ----------- | ------------- | -------------- | --- |
+| Home (`/`)              | 100         | 96            | 100            | 91  |
+| Article (`/articles/1`) | 100         | 100           | 100            | 100 |
+
+### Screenshots
+
+#### Home Page Lighthouse
+
+![Home Lighthouse Report](docs/screenshots/home-lighthouse.png)
+
+#### Article Page Lighthouse
+
+![Article Lighthouse Report](docs/screenshots/article-lighthouse.png)
+
+## Deployment
+
+Live URL: `https://news-website-opal.vercel.app/`
