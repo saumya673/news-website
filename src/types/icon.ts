@@ -1,6 +1,7 @@
 import type { ReactElement, SVGProps } from "react";
 
 export type IconName =
+  | "arrowRight"
   | "business"
   | "culture"
   | "facebook"
