@@ -23,7 +23,18 @@ type StoryHeroProps = {
   decorations?: ReactNode;
 };
 
-const heroThemeClasses = {
+type HeroThemeClassSet = {
+  avatar: string;
+  badge: string;
+  excerpt: string;
+  kicker?: string;
+  metaPrimary: string;
+  metaSecondary: string;
+  supportingText?: string;
+  title: string;
+};
+
+const heroThemeClasses: Record<StoryHeroTheme, HeroThemeClassSet> = {
   home: {
     avatar:
       "flex h-10 w-10 items-center justify-center rounded-full bg-black/5 text-sm font-semibold text-hero-strong dark:bg-[linear-gradient(135deg,color-mix(in_srgb,var(--header-accent)_24%,var(--hero-surface))_0%,color-mix(in_srgb,var(--hero-strong)_10%,var(--hero-surface))_100%)]",
@@ -50,19 +61,7 @@ const heroThemeClasses = {
     title:
       "font-serif text-4xl leading-tight font-bold tracking-[-0.03em] text-hero-strong transition-colors group-hover:text-header-accent sm:text-5xl sm:leading-[1.15] dark:text-white",
   },
-} satisfies Record<
-  StoryHeroTheme,
-  {
-    avatar: string;
-    badge: string;
-    excerpt: string;
-    kicker?: string;
-    metaPrimary: string;
-    metaSecondary: string;
-    supportingText?: string;
-    title: string;
-  }
->;
+};
 
 function getInitials(name: string) {
   return name
