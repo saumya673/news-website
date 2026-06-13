@@ -139,6 +139,16 @@ body::-webkit-scrollbar-thumb:hover {
     display: none;
   }
 
+  .editor-picks-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .editor-picks-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
   @media (min-width: 64rem) {
     .mobile-nav-scroll {
       mask-image: none;

@@ -57,7 +57,7 @@ const articleCardVariants = {
     showPublishedAt: false,
     showReadTime: false,
     sizes:
-      "(min-width: 1280px) 270px, (min-width: 640px) calc((100vw - 7rem) / 2), 100vw",
+      "(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 85vw",
     titleClassName:
       "font-serif text-[1.125rem] leading-6.25 font-bold tracking-[-0.02em] text-foreground transition-colors group-hover:text-header-accent",
   },

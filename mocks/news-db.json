@@ -287,6 +287,26 @@
       "id": "editor-pick-4",
       "articleId": 4,
       "rank": 4
+    },
+    {
+      "id": "editor-pick-5",
+      "articleId": 2,
+      "rank": 5
+    },
+    {
+      "id": "editor-pick-6",
+      "articleId": 3,
+      "rank": 6
+    },
+    {
+      "id": "editor-pick-7",
+      "articleId": 6,
+      "rank": 7
+    },
+    {
+      "id": "editor-pick-8",
+      "articleId": 1,
+      "rank": 8
     }
   ]
 }

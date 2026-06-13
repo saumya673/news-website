@@ -1,4 +1,5 @@
 import ArticleCard from "@/components/ArticleCard";
+import EditorPicksRail from "@/components/Home/EditorPicksRail";
 import { getEditorPicks } from "@/lib/api/news";
 
 export default async function EditorPicks() {
@@ -15,21 +16,19 @@ export default async function EditorPicks() {
             <div className="h-px flex-1 bg-[color-mix(in_srgb,var(--foreground)_12%,transparent)]" />
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-            {editorPicks.length === 0 ? (
-              <div className="rounded-lg border border-[color-mix(in_srgb,var(--foreground)_8%,transparent)] px-6 py-8 text-sm leading-6 text-header-muted sm:col-span-2 xl:col-span-4">
-                No editor&apos;s picks are available from the mock API right now.
-              </div>
-            ) : null}
-
-            {editorPicks.map((story) => (
-              <ArticleCard
-                key={story.id}
-                article={story}
-                variant="editor-pick"
-              />
-            ))}
-          </div>
+          {editorPicks.length === 0 ? (
+            <div className="rounded-lg border border-[color-mix(in_srgb,var(--foreground)_8%,transparent)] px-6 py-8 text-sm leading-6 text-header-muted">
+              No editor&apos;s picks are available from the mock API right now.
+            </div>
+          ) : (
+            <EditorPicksRail>
+              {editorPicks.map((story) => (
+                <div key={story.id} className="snap-start">
+                  <ArticleCard article={story} variant="editor-pick" />
+                </div>
+              ))}
+            </EditorPicksRail>
+          )}
         </div>
       </div>
     </section>
