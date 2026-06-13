@@ -1,5 +1,9 @@
+import { Suspense } from "react";
+
 import Hero from "@/components/Home/Hero";
-import TopStories from "@/components/Home/TopStories";
+import TopStories, {
+  TopStoriesSkeleton,
+} from "@/components/Home/TopStories";
 import LatestNews from "@/components/Home/LatestNews";
 import EditorPicks from "@/components/Home/EditorPicks";
 
@@ -7,7 +11,9 @@ export default function Home() {
   return (
     <div>
       <Hero />
-      <TopStories />
+      <Suspense fallback={<TopStoriesSkeleton />}>
+        <TopStories />
+      </Suspense>
       <LatestNews />
       <EditorPicks />
     </div>

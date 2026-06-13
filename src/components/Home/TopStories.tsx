@@ -1,43 +1,47 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const topStories = [
-  {
-    category: "Tech",
-    title: "The Quiet Revolution Inside AI Chip Foundries",
-    description:
-      "A new generation of semiconductors promises to reshape how data centers consume power across the globe.",
-    href: "/tech",
-    image: {
-      src: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
-      alt: "Close-up of an illuminated circuit board with dense chip patterns.",
-    },
-  },
-  {
-    category: "Business",
-    title: "Markets Rally as Central Banks Signal Rate Pause",
-    description:
-      "Investors cheered fresh inflation data, sending major indices to record highs in early trading.",
-    href: "/business",
-    image: {
-      src: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80",
-      alt: "Trading charts and market data displayed across multiple monitors.",
-    },
-  },
-  {
-    category: "Culture",
-    title: "Inside the Year's Most Talked-About Retrospective",
-    description:
-      "A sprawling new exhibition reframes a forgotten movement for a contemporary audience.",
-    href: "/culture",
-    image: {
-      src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
-      alt: "A visitor standing in a gallery surrounded by framed artworks.",
-    },
-  },
-] as const;
+import { getTopStories } from "@/lib/api/news";
 
-export default function TopStories() {
+export function TopStoriesSkeleton() {
+  return (
+    <section className="bg-background">
+      <div className="mx-auto w-full max-w-360 px-4 py-10 sm:px-8 md:px-12 md:py-12 lg:px-30 lg:py-12">
+        <div className="mx-auto flex w-full max-w-300 flex-col gap-6 lg:px-6">
+          <div className="flex items-center justify-between gap-4">
+            <div className="h-8 w-40 rounded bg-[color-mix(in_srgb,var(--foreground)_10%,transparent)]" />
+            <div className="h-5 w-16 rounded bg-[color-mix(in_srgb,var(--foreground)_8%,transparent)]" />
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {Array.from({ length: 3 }, (_, index) => (
+              <article
+                key={index}
+                className="overflow-hidden rounded-lg border border-[color-mix(in_srgb,var(--foreground)_8%,transparent)] bg-background shadow-[0_1px_3px_color-mix(in_srgb,var(--foreground)_10%,transparent),0_1px_2px_-1px_color-mix(in_srgb,var(--foreground)_10%,transparent)]"
+              >
+                <div className="aspect-368/230 w-full bg-[color-mix(in_srgb,var(--foreground)_8%,transparent)]" />
+
+                <div className="flex animate-pulse flex-col gap-4 px-6 py-6">
+                  <div className="h-4 w-20 rounded bg-[color-mix(in_srgb,var(--header-accent)_30%,transparent)]" />
+                  <div className="space-y-2">
+                    <div className="h-8 w-full rounded bg-[color-mix(in_srgb,var(--foreground)_10%,transparent)]" />
+                    <div className="h-8 w-5/6 rounded bg-[color-mix(in_srgb,var(--foreground)_10%,transparent)]" />
+                    <div className="h-5 w-full rounded bg-[color-mix(in_srgb,var(--foreground)_8%,transparent)]" />
+                    <div className="h-5 w-11/12 rounded bg-[color-mix(in_srgb,var(--foreground)_8%,transparent)]" />
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default async function TopStories() {
+  const topStories = await getTopStories();
+
   return (
     <section className="bg-background">
       <div className="mx-auto w-full max-w-360 px-4 py-10 sm:px-8 md:px-12 md:py-12 lg:px-30 lg:py-12">
@@ -56,9 +60,15 @@ export default function TopStories() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {topStories.length === 0 ? (
+              <div className="rounded-lg border border-[color-mix(in_srgb,var(--foreground)_8%,transparent)] px-6 py-8 text-sm leading-6 text-header-muted md:col-span-2 xl:col-span-3">
+                No top stories are available from the mock API right now.
+              </div>
+            ) : null}
+
             {topStories.map((story) => (
               <article
-                key={story.title}
+                key={story.id}
                 className="overflow-hidden rounded-lg border border-[color-mix(in_srgb,var(--foreground)_8%,transparent)] bg-background shadow-[0_1px_3px_color-mix(in_srgb,var(--foreground)_10%,transparent),0_1px_2px_-1px_color-mix(in_srgb,var(--foreground)_10%,transparent)]"
               >
                 <Link href={story.href} className="block">
@@ -89,7 +99,7 @@ export default function TopStories() {
                     </h3>
 
                     <p className="text-sm leading-[1.55rem] text-header-muted">
-                      {story.description}
+                      {story.excerpt}
                     </p>
                   </div>
                 </div>
