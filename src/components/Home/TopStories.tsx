@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 
+import ArticleCard from "@/components/ArticleCard";
 import { getTopStories } from "@/lib/api/news";
 
 export function TopStoriesSkeleton() {
@@ -67,38 +67,7 @@ export default async function TopStories() {
             ) : null}
 
             {topStories.map((story) => (
-              <article key={story.id}>
-                <Link
-                  href={story.href}
-                  className="group block overflow-hidden rounded-lg border border-[color-mix(in_srgb,var(--foreground)_8%,transparent)] bg-background shadow-[0_1px_3px_color-mix(in_srgb,var(--foreground)_10%,transparent),0_1px_2px_-1px_color-mix(in_srgb,var(--foreground)_10%,transparent)] transition-transform hover:-translate-y-0.5"
-                >
-                  <div className="relative aspect-368/230 w-full">
-                    <Image
-                      src={story.image.src}
-                      alt={story.image.alt}
-                      fill
-                      sizes="(min-width: 1280px) 368px, (min-width: 768px) calc((100vw - 8rem) / 2), 100vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-4 px-6 py-6">
-                    <p className="text-[0.75rem] leading-4 font-semibold tracking-[0.3px] text-header-accent uppercase">
-                      {story.category}
-                    </p>
-
-                    <div className="space-y-2">
-                      <h3 className="font-serif text-[1.75rem] leading-8 font-bold tracking-[-0.03em] text-foreground transition-colors group-hover:text-header-accent">
-                        {story.title}
-                      </h3>
-
-                      <p className="text-sm leading-[1.55rem] text-header-muted">
-                        {story.excerpt}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              </article>
+              <ArticleCard key={story.id} article={story} variant="top-story" />
             ))}
           </div>
         </div>

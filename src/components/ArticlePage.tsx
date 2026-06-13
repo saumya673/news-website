@@ -1,14 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import ArticleCard from "@/components/ArticleCard";
+import { formatPublishedAt } from "@/lib/utils/news";
 import type { LinkedArticle } from "@/types/news";
-
-function formatPublishedAt(value: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    dateStyle: "long",
-    timeZone: "UTC",
-  }).format(new Date(value));
-}
 
 function getInitials(name: string) {
   return name
@@ -124,35 +119,11 @@ export default function ArticlePage({
 
               <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {relatedArticles.map((relatedArticle) => (
-                  <article key={relatedArticle.id}>
-                    <Link
-                      href={relatedArticle.href}
-                      className="group block overflow-hidden rounded-xl border border-[color-mix(in_srgb,var(--foreground)_8%,transparent)] bg-background shadow-[0_1px_3px_color-mix(in_srgb,var(--foreground)_10%,transparent),0_1px_2px_-1px_color-mix(in_srgb,var(--foreground)_10%,transparent)] transition-transform hover:-translate-y-0.5"
-                    >
-                      <div className="relative aspect-16/10 w-full">
-                        <Image
-                          src={relatedArticle.image.src}
-                          alt={relatedArticle.image.alt}
-                          fill
-                          sizes="(min-width: 1280px) 368px, (min-width: 768px) calc((100vw - 8rem) / 2), 100vw"
-                          className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                        />
-                      </div>
-
-                      <div className="space-y-3 px-5 py-5">
-                        <p className="text-[0.75rem] leading-4 font-semibold tracking-[0.3px] text-header-accent uppercase">
-                          {relatedArticle.category}
-                        </p>
-                        <h3 className="font-serif text-[1.25rem] leading-7 font-bold tracking-[-0.02em] text-foreground transition-colors group-hover:text-header-accent">
-                          {relatedArticle.title}
-                        </h3>
-                        <p className="text-sm leading-5 text-header-muted">
-                          {formatPublishedAt(relatedArticle.publishedAt)} |{" "}
-                          {relatedArticle.readTime}
-                        </p>
-                      </div>
-                    </Link>
-                  </article>
+                  <ArticleCard
+                    key={relatedArticle.id}
+                    article={relatedArticle}
+                    variant="related"
+                  />
                 ))}
               </div>
             </section>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { icons } from "@/lib/svg/icons";
+import { formatPublishedAt } from "@/lib/utils/news";
 import type { LinkedArticle } from "@/types/news";
 
 type StoryHeroTheme = "feature" | "home";
@@ -58,13 +59,6 @@ const heroThemeClasses = {
     title: string;
   }
 >;
-
-function formatPublishedAt(value: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    dateStyle: "long",
-    timeZone: "UTC",
-  }).format(new Date(value));
-}
 
 function getInitials(name: string) {
   return name
