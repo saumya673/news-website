@@ -8,6 +8,7 @@ import type { LinkedArticle } from "@/types/news";
 function getInitials(name: string) {
   return name
     .split(" ")
+    .filter((part) => part.length > 0)
     .map((part) => part[0])
     .join("")
     .slice(0, 2)
@@ -103,8 +104,8 @@ export default function ArticlePage({
       <section className="mx-auto w-full max-w-360 px-4 py-10 sm:px-8 sm:py-12 md:px-12 lg:px-30 lg:py-14">
         <div className="mx-auto w-full max-w-300 lg:px-6">
           <article className="max-w-3xl space-y-7 text-[1.0625rem] leading-8 text-foreground">
-            {article.body.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+            {article.body.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
             ))}
           </article>
 

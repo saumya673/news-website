@@ -41,7 +41,7 @@ export default function LatestNewsTicker({
     const container = scrollRef.current;
     const dragState = dragStateRef.current;
 
-    if (!container || !dragState?.isDragging) {
+    if (!container || !dragState) {
       return;
     }
 
