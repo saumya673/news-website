@@ -38,15 +38,17 @@ const heroThemeClasses = {
   },
   feature: {
     avatar:
-      "flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-sm font-semibold text-white",
+      "flex h-10 w-10 items-center justify-center rounded-full bg-black/5 text-sm font-semibold text-hero-strong dark:bg-white/15 dark:text-white",
     badge:
       "inline-flex rounded-full bg-header-accent px-3 py-1 text-xs font-semibold tracking-[0.025em] text-header-inverse uppercase",
     excerpt:
-      "max-w-2xl text-lg leading-8 text-white/80 sm:text-[1.375rem] sm:leading-[1.7]",
-    metaPrimary: "text-sm leading-5 font-semibold text-white",
-    metaSecondary: "text-sm leading-5 text-white/70",
+      "max-w-2xl text-lg leading-8 text-hero-muted sm:text-[1.375rem] sm:leading-[1.7] dark:text-white/80",
+    kicker: "text-hero-muted dark:text-white/60",
+    metaPrimary: "text-sm leading-5 font-semibold text-hero-strong dark:text-white",
+    metaSecondary: "text-sm leading-5 text-hero-muted dark:text-white/70",
+    supportingText: "text-hero-muted dark:text-white/65",
     title:
-      "font-serif text-4xl leading-tight font-bold tracking-[-0.03em] text-white transition-colors group-hover:text-header-accent sm:text-5xl sm:leading-[1.15]",
+      "font-serif text-4xl leading-tight font-bold tracking-[-0.03em] text-hero-strong transition-colors group-hover:text-header-accent sm:text-5xl sm:leading-[1.15] dark:text-white",
   },
 } satisfies Record<
   StoryHeroTheme,
@@ -54,8 +56,10 @@ const heroThemeClasses = {
     avatar: string;
     badge: string;
     excerpt: string;
+    kicker?: string;
     metaPrimary: string;
     metaSecondary: string;
+    supportingText?: string;
     title: string;
   }
 >;
@@ -98,7 +102,9 @@ export default function StoryHero({
               <span className={themeClasses.badge}>{badgeLabel}</span>
 
               {kicker ? (
-                <p className="mt-5 text-sm leading-6 font-medium tracking-[0.24em] text-white/60 uppercase">
+                <p
+                  className={`mt-5 text-sm leading-6 font-medium tracking-[0.24em] uppercase ${themeClasses.kicker ?? "text-white/60"}`}
+                >
                   {kicker}
                 </p>
               ) : null}
@@ -114,7 +120,9 @@ export default function StoryHero({
               </div>
 
               {supportingText ? (
-                <p className="mt-5 max-w-2xl text-sm leading-6 text-white/65 sm:text-base">
+                <p
+                  className={`mt-5 max-w-2xl text-sm leading-6 sm:text-base ${themeClasses.supportingText ?? "text-white/65"}`}
+                >
                   {supportingText}
                 </p>
               ) : null}

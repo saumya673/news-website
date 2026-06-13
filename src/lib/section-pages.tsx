@@ -93,7 +93,8 @@ export const sectionPages: Record<SectionSlug, SectionPageEntry> = {
         "absolute bottom-[-10rem] left-1/3 h-80 w-80 rounded-full bg-violet-600/25 blur-3xl",
         "absolute bottom-[-8rem] right-1/4 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl",
       ],
-      accentLinkClassName: "text-rose-300 hover:text-rose-200",
+      accentLinkClassName:
+        "text-header-accent hover:text-header-accent-hover dark:text-rose-300 dark:hover:text-rose-200",
       newsletterDescription:
         "Get the week's most important tech stories, curated by our editors, delivered to your inbox every Friday.",
     },
@@ -115,7 +116,8 @@ export const sectionPages: Record<SectionSlug, SectionPageEntry> = {
         "absolute -right-24 top-12 h-72 w-72 rounded-full bg-sky-600/25 blur-3xl",
         "absolute bottom-[-8rem] left-1/3 h-72 w-72 rounded-full bg-blue-500/18 blur-3xl",
       ],
-      accentLinkClassName: "text-cyan-300 hover:text-cyan-200",
+      accentLinkClassName:
+        "text-header-accent hover:text-header-accent-hover dark:text-cyan-300 dark:hover:text-cyan-200",
       newsletterDescription:
         "Get the week's most important world stories, curated by our editors, delivered to your inbox every Friday.",
     },
@@ -137,7 +139,8 @@ export const sectionPages: Record<SectionSlug, SectionPageEntry> = {
         "absolute right-0 top-0 h-80 w-80 rounded-full bg-lime-500/15 blur-3xl",
         "absolute bottom-[-8rem] right-1/3 h-72 w-72 rounded-full bg-emerald-400/18 blur-3xl",
       ],
-      accentLinkClassName: "text-emerald-300 hover:text-emerald-200",
+      accentLinkClassName:
+        "text-header-accent hover:text-header-accent-hover dark:text-emerald-300 dark:hover:text-emerald-200",
       newsletterDescription:
         "Get the week's most important business stories, curated by our editors, delivered to your inbox every Friday.",
     },
@@ -159,7 +162,8 @@ export const sectionPages: Record<SectionSlug, SectionPageEntry> = {
         "absolute right-4 top-0 h-72 w-72 rounded-full bg-rose-500/22 blur-3xl",
         "absolute bottom-[-9rem] left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-orange-500/14 blur-3xl",
       ],
-      accentLinkClassName: "text-amber-300 hover:text-amber-200",
+      accentLinkClassName:
+        "text-header-accent hover:text-header-accent-hover dark:text-amber-300 dark:hover:text-amber-200",
       newsletterDescription:
         "Get the week's most important culture stories, curated by our editors, delivered to your inbox every Friday.",
     },

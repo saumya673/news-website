@@ -33,7 +33,7 @@ export default function SectionFeaturePage({
     <div className="bg-background">
       <StoryHero
         article={featuredArticle}
-        backgroundClassName="relative overflow-hidden bg-[#0b0d1a] text-white"
+        backgroundClassName="relative overflow-hidden bg-hero-surface text-hero-strong dark:bg-[#0b0d1a] dark:text-white"
         badgeLabel={config.label}
         contentClassName="max-w-3xl"
         ctaClassName={config.accentLinkClassName}
