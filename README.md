@@ -166,6 +166,22 @@ Section pages share a common layout and use central configuration from `src/lib/
 
 The UI uses Tailwind utilities with shared theme tokens and `next-themes` for light/dark support instead of hard-coded one-theme styling.
 
+## Trade-offs
+
+- The project uses mock editorial data instead of a live news source so the focus stays on UI quality, component structure, and frontend performance.
+- The hosted Postman mock mode returns a single aggregated payload, which keeps integration simple for the assignment but is less flexible than a more granular production API.
+- Section pages are driven by shared configuration and reusable layouts, which improves consistency and speed of development, but limits per-section variation unless the config model is extended.
+- The current content model is intentionally lightweight and optimized for the assignment scope rather than a full CMS-backed publishing workflow.
+
+## Future Improvements
+
+- Add Zod schemas for runtime API response validation and safer parsing of mock or hosted data.
+- Add a `View All` experience for top stories so users can browse the full set beyond the homepage rail.
+- Add search, filtering, and richer article discovery flows.
+- Expand the article experience with related stories, author pages, and richer long-form content blocks.
+- Add automated tests for the API layer, route rendering, and critical UI components.
+- Refine accessibility further with deeper keyboard-flow, screen-reader, and reduced-motion audits.
+
 ## Available Routes
 
 - `/` - homepage
