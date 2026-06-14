@@ -161,7 +161,10 @@ export default function StoryHero({
                 href={article.href}
                 className={`inline-flex items-center gap-1 text-sm leading-5 font-semibold transition-colors ${themeClasses.ctaWrapper} ${ctaClassName}`}
               >
-                <span>Read More</span>
+                <span>
+                  Read More
+                  <span className="sr-only"> about {article.title}</span>
+                </span>
                 <ArrowRightIcon className="h-4 w-4" />
               </Link>
             </div>

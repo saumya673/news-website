@@ -30,8 +30,8 @@ type NewsRequestInit = RequestInit & {
   };
 };
 
-export function getArticleHref(articleId: number) {
-  return `${ARTICLE_ROUTE_PREFIX}/${articleId}`;
+export function getArticleHref(articleSlug: string) {
+  return `${ARTICLE_ROUTE_PREFIX}/${encodeURIComponent(articleSlug)}`;
 }
 
 function buildArticleIdQuery(articleIds: number[]) {
@@ -82,7 +82,7 @@ async function fetchNewsJson<T>(
 function withArticleHref(article: Article): LinkedArticle {
   return {
     ...article,
-    href: getArticleHref(article.id),
+    href: getArticleHref(article.slug),
   };
 }
 
@@ -173,34 +173,27 @@ export async function getEditorPicks(): Promise<RankedArticle[]> {
   return getCuratedArticles("editorPicks");
 }
 
-export async function getArticleById(
-  articleId: number,
+export async function getArticleBySlug(
+  articleSlug: string,
 ): Promise<LinkedArticle | null> {
   const next = { revalidate: TOP_STORIES_REVALIDATE_SECONDS };
 
   if (NEWS_API_DATA_PATH) {
     const newsApiDocument = await getNewsApiDocument({ next });
     const article = newsApiDocument.articles.find(
-      (candidate) => candidate.id === articleId,
+      (candidate) => candidate.slug === articleSlug,
     );
 
     return article ? withArticleHref(article) : null;
   }
 
-  const response = await fetchNewsResponse(`/articles/${articleId}`, { next });
+  const articles = await fetchNewsJson<Article[]>(
+    `/articles?slug=${encodeURIComponent(articleSlug)}`,
+    { next },
+  );
+  const article = articles[0];
 
-  if (response.status === 404) {
-    return null;
-  }
-
-  if (!response.ok) {
-    throw new Error(
-      `Mock news API request failed for /articles/${articleId} with status ${response.status}.`,
-    );
-  }
-
-  const article = (await response.json()) as Article;
-  return withArticleHref(article);
+  return article ? withArticleHref(article) : null;
 }
 
 export async function getArticlesByIds(

@@ -10,7 +10,7 @@ Key user-facing features:
 
 - Homepage with hero story, top stories, latest headlines, and editor's picks
 - Section pages for curated topic coverage
-- Dynamic article detail pages at `/articles/[articleId]`
+- Dynamic article detail pages at `/articles/[slug]`
 - Responsive layout for mobile, tablet, and desktop
 - Light and dark theme support
 
@@ -185,7 +185,7 @@ The UI uses Tailwind utilities with shared theme tokens and `next-themes` for li
 ## Available Routes
 
 - `/` - homepage
-- `/articles/1` - example article detail page
+- `/articles/global-leaders-convene-climate-deadline` - example article detail page
 - `/world`
 - `/tech`
 - `/business`
@@ -203,14 +203,14 @@ Lighthouse was run against the deployed build on Vercel.
 Pages measured:
 
 - Home page: `/`
-- Article page: `/articles/1`
+- Article page: `/articles/global-leaders-convene-climate-deadline`
 
 ### Scores
 
 | Page                    | Performance | Accessibility | Best Practices | SEO |
 | ----------------------- | ----------- | ------------- | -------------- | --- |
 | Home (`/`)              | 100         | 96            | 100            | 91  |
-| Article (`/articles/1`) | 100         | 100           | 100            | 100 |
+| Article (`/articles/global-leaders-convene-climate-deadline`) | 100         | 100           | 100            | 100 |
 
 ### Screenshots
 

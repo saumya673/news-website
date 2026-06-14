@@ -1,38 +1,38 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import ArticlePage from "@/components/ArticlePage";
-import { getArticleById, getArticlesByIds } from "@/lib/api/news";
+import { getArticleBySlug, getArticlesByIds } from "@/lib/api/news";
 
 type ArticleRoutePageProps = {
   params: Promise<{
-    articleId: string;
+    slug: string;
   }>;
 };
 
-function parseArticleId(value: string) {
-  const articleId = Number(value);
+function normalizeArticleSlug(value: string) {
+  const slug = value.trim().toLowerCase();
 
-  if (!Number.isInteger(articleId) || articleId <= 0) {
+  if (slug.length === 0) {
     return null;
   }
 
-  return articleId;
+  return slug;
 }
 
 export async function generateMetadata({
   params,
 }: ArticleRoutePageProps): Promise<Metadata> {
-  const { articleId } = await params;
-  const parsedArticleId = parseArticleId(articleId);
+  const { slug } = await params;
+  const normalizedSlug = normalizeArticleSlug(slug);
 
-  if (parsedArticleId === null) {
+  if (normalizedSlug === null) {
     return {
       title: "Article | The Herald",
     };
   }
 
-  const article = await getArticleById(parsedArticleId);
+  const article = await getArticleBySlug(normalizedSlug);
 
   if (!article) {
     return {
@@ -49,17 +49,21 @@ export async function generateMetadata({
 export default async function ArticleRoutePage({
   params,
 }: ArticleRoutePageProps) {
-  const { articleId } = await params;
-  const parsedArticleId = parseArticleId(articleId);
+  const { slug } = await params;
+  const normalizedSlug = normalizeArticleSlug(slug);
 
-  if (parsedArticleId === null) {
+  if (normalizedSlug === null) {
     notFound();
   }
 
-  const article = await getArticleById(parsedArticleId);
+  const article = await getArticleBySlug(normalizedSlug);
 
   if (!article) {
     notFound();
+  }
+
+  if (slug !== article.slug) {
+    redirect(article.href);
   }
 
   const relatedArticles = await getArticlesByIds(article.relatedIds);
